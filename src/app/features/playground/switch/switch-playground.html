@@ -1,0 +1,67 @@
+<div class="workspace">
+  <section class="panel preview" aria-labelledby="switch-title" [style]="styleValues()">
+    <h1 id="switch-title">Switch</h1>
+
+    <div class="stages">
+      <div class="stage">
+        <h2>ngModel</h2>
+        <km-switch
+          [(ngModel)]="templateValue"
+          [label]="label()"
+          [disabled]="disabled()"
+          (checkedChange)="lastEvent.set($event)"
+        />
+        <p class="value">value: {{ templateValue() }}</p>
+        <p class="value">checkedChange: {{ lastEvent() ?? '—' }}</p>
+      </div>
+
+      <div class="stage">
+        <h2>Reactive Forms</h2>
+        <km-switch [formControl]="control" [label]="label()" />
+        <p class="value">value: {{ control.value }}</p>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel properties" aria-labelledby="switch-properties-title">
+    <h2 id="switch-properties-title">Propriedades</h2>
+
+    <fieldset class="segmented">
+      <legend class="visually-hidden">Grupo de propriedades</legend>
+      @for (section of sections; track section.id) {
+        <label class="segment">
+          <input
+            type="radio"
+            name="switch-section"
+            [checked]="activeSection() === section.id"
+            (change)="activeSection.set(section.id)"
+          />
+          <span>{{ section.label }}</span>
+        </label>
+      }
+    </fieldset>
+
+    <div class="panel-body">
+      @switch (activeSection()) {
+        @case ('general') {
+          <label class="field">
+            Label
+            <input #labelInput [value]="label()" (input)="label.set(labelInput.value)" />
+          </label>
+          <km-switch
+            label="Disabled"
+            [ngModel]="disabled()"
+            (ngModelChange)="setDisabled($event)"
+          />
+          <div class="actions">
+            <button type="button" class="button" (click)="setValue(true)">Ligar</button>
+            <button type="button" class="button" (click)="setValue(false)">Desligar</button>
+          </div>
+        }
+        @case ('style') {
+          <km-style-editor [(values)]="styleValues" />
+        }
+      }
+    </div>
+  </aside>
+</div>
