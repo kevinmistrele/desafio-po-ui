@@ -1,0 +1,125 @@
+:host {
+  --_color-unchecked: var(--color-unchecked, var(--color-neutral-light-00));
+  --_border-color: var(--border-color, var(--color-neutral-dark-70));
+  --_track-unchecked: var(--track-unchecked, var(--color-neutral-light-20));
+  --_color-checked: var(--color-checked, var(--color-action-default));
+  --_track-checked: var(--track-checked, var(--color-brand-01-light));
+  --_color-unchecked-hover: var(--color-unchecked-hover, var(--color-brand-01-lightest));
+  --_color-checked-hover: var(--color-checked-hover, var(--color-action-hover));
+  --_outline-color-focused: var(--outline-color-focused, var(--color-action-focus));
+  --_color-unchecked-disabled: var(--color-unchecked-disabled, var(--color-neutral-light-20));
+  --_color-checked-disabled: var(--color-checked-disabled, var(--color-action-disabled));
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-family-text);
+}
+
+/* O botão é a área clicável e focável: envolve track + key para o outline cobrir os dois. */
+.switch {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  width: 3rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.125rem;
+  background: none;
+  cursor: pointer;
+}
+
+.track {
+  width: 100%;
+  height: 1rem;
+  border-radius: 1rem;
+  background-color: var(--_track-unchecked);
+}
+
+.key {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--_border-color);
+  border-radius: 100%;
+  background-color: var(--_color-unchecked);
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--_color-unchecked);
+  opacity: 0;
+}
+
+/* Estados do switch */
+
+.switch[aria-checked='true'] .track {
+  background-color: var(--_track-checked);
+}
+
+.switch[aria-checked='true'] .key {
+  transform: translateX(1.5rem);
+  border-color: transparent;
+  background-color: var(--_color-checked);
+}
+
+.switch[aria-checked='true'] .icon {
+  opacity: 1;
+}
+
+/* Hover */
+.switch:hover:not(:disabled) .key {
+  border-color: var(--_color-checked-hover);
+  background-color: var(--_color-unchecked-hover);
+}
+
+.switch[aria-checked='true']:hover:not(:disabled) .key {
+  border-color: transparent;
+  background-color: var(--_color-checked-hover);
+}
+
+/* Focus: só na navegação por teclado */
+.switch:focus-visible {
+  outline: 4px solid var(--_outline-color-focused);
+  outline-offset: 2px;
+}
+
+/* Disabled */
+.switch:disabled {
+  cursor: not-allowed;
+}
+
+.switch:disabled .key {
+  border-color: var(--_color-checked-disabled);
+  background-color: var(--_color-unchecked-disabled);
+}
+
+.switch[aria-checked='true']:disabled .track {
+  background-color: var(--_track-unchecked);
+}
+
+.switch[aria-checked='true']:disabled .key {
+  border-color: transparent;
+  background-color: var(--_color-checked-disabled);
+}
+
+.switch[aria-checked='true']:disabled .icon {
+  fill: var(--_color-unchecked-disabled);
+}
+
+.switch:disabled + .label {
+  cursor: not-allowed;
+}
+
+
+.label {
+  color: var(--color-neutral-dark-90);
+  cursor: pointer;
+}
