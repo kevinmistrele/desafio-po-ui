@@ -1,0 +1,114 @@
+/* Tela única: menu lateral fixo + área de trabalho com a altura da janela. */
+:host {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  height: 100dvh;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 0.75rem;
+  border-right: 1px solid var(--color-neutral-light-20);
+  background-color: var(--color-neutral-light-00);
+}
+
+.brand {
+  margin: 0;
+  padding-inline: 0.75rem;
+  font-weight: 700;
+}
+
+.nav {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-item {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--color-neutral-dark-70);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: var(--color-brand-01-lightest);
+}
+
+.nav-item[aria-current='page'] {
+  background-color: var(--color-brand-01-lightest);
+  color: var(--color-action-default);
+}
+
+.nav-item:focus-visible {
+  outline: 3px solid var(--color-action-focus);
+  outline-offset: 2px;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.breadcrumb {
+  margin: 0;
+  color: var(--color-neutral-dark-70);
+  font-size: 0.875rem;
+}
+
+/* Preview (flexível) + propriedades (fixo). Cada painel rola por dentro se precisar. */
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.panel {
+  min-height: 0;
+  padding: 1.5rem;
+  overflow-y: auto;
+  border-radius: 12px;
+  background-color: var(--color-neutral-light-00);
+}
+
+.panel h1,
+.panel h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+}
+
+.preview h1 {
+  text-align: center;
+}
+
+/* Telas pequenas: tudo empilha e a página rola normalmente. */
+@media (max-width: 900px) {
+  :host {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-neutral-light-20);
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
