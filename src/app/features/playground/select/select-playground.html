@@ -1,0 +1,130 @@
+<div class="workspace">
+  <section class="panel preview" aria-labelledby="select-title" [style]="styleValues()">
+    <h1 id="select-title">Select</h1>
+
+    <div class="stages">
+      <div class="stage">
+        <h2>ngModel</h2>
+        <km-select
+          [(ngModel)]="templateValue"
+          [options]="options()"
+          [label]="label()"
+          [placeholder]="placeholder()"
+          [disabled]="disabled()"
+          [required]="required()"
+        />
+        <p class="value">value: {{ templateValue() ?? 'null' }}</p>
+      </div>
+
+      <div class="stage">
+        <h2>Reactive Forms</h2>
+        <km-select
+          [formControl]="control"
+          [options]="options()"
+          [label]="label()"
+          [placeholder]="placeholder()"
+        />
+        <p class="value">value: {{ control.value ?? 'null' }}</p>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel properties" aria-labelledby="select-properties-title">
+    <h2 id="select-properties-title">Propriedades</h2>
+
+    <fieldset class="segmented">
+      <legend class="visually-hidden">Grupo de propriedades</legend>
+      @for (section of sections; track section.id) {
+        <label class="segment">
+          <input
+            type="radio"
+            name="select-section"
+            [checked]="activeSection() === section.id"
+            (change)="activeSection.set(section.id)"
+          />
+          <span>{{ section.label }}</span>
+        </label>
+      }
+    </fieldset>
+
+    <div class="panel-body">
+      @switch (activeSection()) {
+        @case ('general') {
+          <label class="field">
+            Label
+            <input #labelInput [value]="label()" (input)="label.set(labelInput.value)" />
+          </label>
+          <label class="field">
+            Placeholder
+            <input
+              #placeholderInput
+              [value]="placeholder()"
+              (input)="placeholder.set(placeholderInput.value)"
+            />
+          </label>
+          <km-switch
+            label="Disabled"
+            [ngModel]="disabled()"
+            (ngModelChange)="setDisabled($event)"
+          />
+          <km-switch
+            label="Required"
+            [ngModel]="required()"
+            (ngModelChange)="setRequired($event)"
+          />
+          <div class="actions">
+            <button type="button" class="button" (click)="selectFirstEnabled()">
+              Selecionar 1ª opção
+            </button>
+            <button type="button" class="button" (click)="clearValues()">Limpar valor</button>
+          </div>
+        }
+        @case ('options') {
+          <div class="option-row option-head" aria-hidden="true">
+            <span>Value</span>
+            <span>Label</span>
+            <span>Desab.</span>
+          </div>
+          <ul class="option-list">
+            <!-- track $index pro input nao perder o foco enquanto digita -->
+            @for (option of options(); track $index; let index = $index) {
+              <li class="option-row">
+                <input
+                  #valueInput
+                  aria-label="Value da opção {{ index + 1 }}"
+                  [value]="option.value"
+                  (input)="updateOption(index, { value: valueInput.value })"
+                />
+                <input
+                  #optionLabelInput
+                  aria-label="Label da opção {{ index + 1 }}"
+                  [value]="option.label"
+                  (input)="updateOption(index, { label: optionLabelInput.value })"
+                />
+                <km-switch
+                  ariaLabel="Desabilitar opção {{ index + 1 }}"
+                  [ngModel]="!!option.disabled"
+                  (ngModelChange)="updateOption(index, { disabled: $event })"
+                />
+                <button
+                  type="button"
+                  class="icon-button"
+                  aria-label="Remover opção {{ index + 1 }}"
+                  (click)="removeOption(index)"
+                >
+                  ✕
+                </button>
+              </li>
+            }
+          </ul>
+          <div class="actions">
+            <button type="button" class="button" (click)="addOption()">+ Adicionar opção</button>
+          </div>
+        }
+        @case ('style') {
+          <km-style-editor [(values)]="styleValues" />
+        }
+      }
+    </div>
+  </aside>
+</div>

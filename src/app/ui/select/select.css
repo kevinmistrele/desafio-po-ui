@@ -1,0 +1,142 @@
+:host {
+  --_font-family: var(--font-family, var(--font-family-text));
+  --_font-size: var(--font-size, var(--font-size-default));
+  --_text-color-empty: var(--text-color-empty, var(--color-neutral-light-30));
+  --_text-color: var(--text-color, var(--color-neutral-dark-90));
+  --_color: var(--color, var(--color-neutral-dark-70));
+  --_background: var(--background, var(--color-neutral-light-05));
+  --_padding-horizontal: var(--padding-horizontal, 0.5em);
+  --_padding-vertical: var(--padding-vertical, 0.7em);
+  --_color-hover: var(--color-hover, var(--color-action-hover));
+  --_background-hover: var(--background-hover, var(--color-brand-01-lightest));
+  --_color-focused: var(--color-focused, var(--color-action-default));
+  --_outline-color-focused: var(--outline-color-focused, var(--color-action-focus));
+  --_color-disabled: var(--color-disabled, var(--color-action-disabled));
+  --_background-disabled: var(--background-disabled, var(--color-neutral-light-20));
+  --_color-error: var(--color-error, var(--color-feedback-negative-base));
+
+  position: relative;
+  display: block;
+  font-family: var(--_font-family);
+  font-size: var(--_font-size);
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.25em;
+  color: var(--_text-color);
+}
+
+.trigger {
+  --_border: var(--_color);
+  display: flex;
+  align-items: center;
+  gap: var(--_padding-horizontal);
+  min-height: 2.75em;
+  padding: var(--_padding-vertical) var(--_padding-horizontal);
+  border: 1px solid var(--_border);
+  border-radius: 4px;
+  background-color: var(--_background);
+  color: var(--_text-color);
+  font-weight: 400;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+  width: 1.5em;
+  height: 1.5em;
+  fill: var(--_border);
+}
+
+.trigger:hover {
+  --_border: var(--_color-hover);
+  background-color: var(--_background-hover);
+}
+
+.listbox {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 0.25em);
+  right: 0;
+  left: 0;
+  max-height: 18em;
+  margin: 0;
+  padding: 0.25em 0;
+  overflow-y: auto;
+  border: 1px solid var(--_color);
+  border-radius: 4px;
+  background-color: var(--_background);
+  box-shadow: 0 0.25em 0.75em rgb(0 0 0 / 15%);
+  list-style: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.5em var(--_padding-horizontal);
+  color: var(--_text-color);
+  cursor: pointer;
+}
+
+.check {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  visibility: hidden;
+}
+
+.trigger.is-empty .value {
+  color: var(--_text-color-empty);
+}
+
+.option.is-active {
+  background-color: var(--_background-hover);
+}
+
+.option[aria-selected='true'] {
+  background-color: var(--_color-focused);
+  color: var(--color-neutral-light-00);
+}
+
+.option[aria-selected='true'] .check {
+  visibility: visible;
+}
+
+.option[aria-disabled='true'] {
+  color: var(--_text-color-empty);
+  cursor: not-allowed;
+}
+
+.option.is-placeholder {
+  cursor: default;
+}
+
+
+.trigger:focus-visible,
+.trigger[aria-expanded='true'] {
+  --_border: var(--_color-focused);
+  outline: 4px solid var(--_outline-color-focused);
+  outline-offset: 2px;
+}
+
+:host(.ng-invalid.ng-touched) .trigger {
+  --_border: var(--_color-error);
+  background-color: var(--_background);
+}
+
+.trigger[aria-disabled='true'] {
+  --_border: var(--_color-disabled);
+  background-color: var(--_background-disabled);
+  cursor: not-allowed;
+}

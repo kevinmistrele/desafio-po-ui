@@ -1,0 +1,50 @@
+@if (label()) {
+  <span class="label" [id]="id + '-label'">{{ label() }}</span>
+}
+
+<div
+  class="trigger"
+  role="combobox"
+  aria-haspopup="listbox"
+  [attr.tabindex]="isDisabled() ? -1 : 0"
+  [attr.aria-disabled]="isDisabled()"
+  [class.is-empty]="selectedIndex() === -1"
+  [attr.aria-labelledby]="label() ? id + '-label' : null"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="isOpen() ? id + '-listbox' : null"
+  [attr.aria-activedescendant]="activeOptionId()"
+  (click)="toggle()"
+  (keydown)="onKeydown($event)"
+  (blur)="onBlur()"
+>
+  <span class="value">{{ selectedLabel() ?? placeholder() }}</span>
+  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
+  </svg>
+</div>
+
+@if (isOpen()) {
+  <ul class="listbox" role="listbox" [id]="id + '-listbox'" (mousedown)="$event.preventDefault()">
+    <li class="option is-placeholder" role="option" aria-disabled="true" aria-selected="false">
+      {{ placeholder() }}
+    </li>
+    @for (option of options(); track option; let index = $index) {
+      <li
+        #optionElement
+        class="option"
+        role="option"
+        [id]="optionId(index)" >
+        [class.is-active]="index === activeIndex()"
+        [attr.aria-selected]="index === selectedIndex()"
+        [attr.aria-disabled]="option.disabled || null"
+        (click)="selectOption(index)"
+        (mouseenter)="activate(index)"
+      >
+        <svg class="check" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
+        </svg>
+        {{ option.label }}
+      </li>
+    }
+  </ul>
+}

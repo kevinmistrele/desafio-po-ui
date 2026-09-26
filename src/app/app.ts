@@ -1,12 +1,22 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { SelectPlayground } from './features/playground/select/select-playground';
+import { SwitchPlayground } from './features/playground/switch/switch-playground';
+
+interface Page {
+  id: 'switch' | 'select';
+  label: string;
+}
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'km-root',
-  styleUrl: './app.css',
+  imports: [SwitchPlayground, SelectPlayground],
   templateUrl: './app.html',
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('desafio-po-ui');
+  protected readonly pages: readonly Page[] = [
+    { id: 'switch', label: 'Switch' },
+    { id: 'select', label: 'Select' },
+  ];
+  protected readonly activePage = signal(this.pages[0]);
 }
