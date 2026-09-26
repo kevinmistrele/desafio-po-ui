@@ -1,1 +1,21 @@
-<p>switch works!</p>
+<button
+  type="button"
+  [disabled]="isDisabled()"
+  (blur)="onTouched()"
+  [id]="buttonId"
+  role="switch" class="switch"
+  [attr.aria-checked]="checked()"
+  [attr.aria-label]="ariaLabel()"
+  (click)="toggle()">
+  <span class="track"></span>
+  <span class="key">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
+    </svg>
+  </span>
+</button>
+
+@if (label()) {
+  <label class="label" [for]="buttonId">{{ label()}}</label>
+}
+
