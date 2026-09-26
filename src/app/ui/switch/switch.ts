@@ -1,6 +1,7 @@
 import {booleanAttribute, Component, computed, forwardRef, input, output, signal} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
+// id unico por instancia, usado no <label for>
 let nextId = 0
 
 @Component({
@@ -14,8 +15,10 @@ let nextId = 0
   ]
 })
 export class Switch implements ControlValueAccessor {
+  // booleanAttribute: faz <km-switch disabled> virar true porque se não tiver, vira uma string vazia
   readonly disabled = input(false, {transform: booleanAttribute})
   readonly label = input('')
+  // usado quando nao tem label visivel, deve ser usado para ser acessivel
   readonly ariaLabel = input<string>();
 
   protected readonly buttonId = `km-switch-${nextId++}`;
@@ -26,9 +29,11 @@ export class Switch implements ControlValueAccessor {
   private onChange: (checked: boolean) => void = () => {};
   protected onTouched: () => void = () => {};
 
+  // disabled pode vir do input ou do form
   private readonly disabledByForm = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.disabledByForm());
 
+  // atualiza o valor, avisa o form e emite o evento
   protected toggle() {
     const checked = !this.checked()
     this.checked.set(checked)
