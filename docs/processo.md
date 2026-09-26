@@ -129,6 +129,38 @@ sufixo `.component` (`switch.ts`, classe `Switch`).
 
 ---
 
+## Uso de IA neste teste
+
+O PDF pede uso moderado de IA, então deixo registrado como usei. Tratei a IA principalmente como
+apoio de estudo, e não como quem faz o trabalho.
+
+**Para entender o Angular atual.** Eu vinha de uma versão mais antiga do Angular, e muita coisa do
+core mudou: diretivas, ciclo de vida, change detection, a forma de declarar inputs e outputs. Usei a
+IA para entender o que cada coisa faz, se funciona exatamente como antes e, quando não, por que
+mudou. O mesmo para as sintaxes novas (`@if`, `@for`, `input()`, `computed()`...). A ideia era
+entender o porquê de cada escolha, não só fazer funcionar.
+
+**Para organizar pensamentos e ideias.** Antes de cada fase, usei a IA para discutir e organizar o
+que eu queria fazer, e depois registrar as decisões neste documento.
+
+**Para depurar.** Quando aparecia um erro, usei a IA para entender a causa e então corrigir.
+
+**Para código**, usei principalmente no playground (a página de demonstração). Também me ajudou a
+dar mais visibilidade ao projeto e a melhorar o README.
+
+**O que foi meu:**
+- **O design da tela.** Desenhei no Excalidraw e quebrei a tela em partes (layout, sidebar, área de
+  visualização e área de edição) pensando em quem vai avaliar: tudo numa tela só, sem rolagem,
+  para mudar uma propriedade e ver o resultado ao mesmo tempo.
+- **A arquitetura.** A separação entre `ui/` (os componentes do desafio) e `features/` (a demo),
+  e a decisão de não transformar a sidebar e os cards em componentes, porque não tinham
+  comportamento próprio.
+- **O escopo.** Entregar o que o PDF e os handoffs pedem, bem feito, sem enfeite.
+- **A validação.** Testei manualmente todos os estados dos handoffs (hover, focus, error, disabled),
+  o teclado e os dois tipos de formulário, e revisei tudo que entrou no repositório.
+
+---
+
 ## Conceitos que ficaram claros neste desafio
 
 O jeito de montar componentes no Angular atual mudou muito em relação ao Angular que eu usava no
