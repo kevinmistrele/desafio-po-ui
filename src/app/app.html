@@ -22,34 +22,10 @@
 <main class="main">
   <p class="breadcrumb">Playground / {{ activePage().label }}</p>
 
-  <div class="workspace">
-    <section class="panel preview" aria-labelledby="preview-title">
-      <h1 id="preview-title">{{ activePage().label }}</h1>
-      @switch (activePage().id) {
-        @case('switch') {
-          <km-switch label="ngModel" [(ngModel)]="value" /> {{ value() }}
-          <br />
-          <km-switch label="formControl" [formControl]="control" /> {{ control.value }}
-          <button type="button" (click)="control.disable()">disable</button>
-          <button type="button" (click)="control.enable()">enable</button>
-          <button type="button" (click)="control.reset()">reset</button>
-        }
-        @case('select') {
-          <km-select />
-        }
-      }
-    </section>
-
-    <aside class="panel properties" aria-labelledby="properties-title">
-      <h2 id="properties-title">Propriedades</h2>
-      @switch (activePage().id) {
-        @case('switch') {
-          Teste
-        }
-        @case('select') {
-          Teste
-        }
-      }
-    </aside>
+  <div class="page" [hidden]="activePage().id !== 'switch'">
+    <km-switch-playground />
+  </div>
+  <div class="page" [hidden]="activePage().id !== 'select'">
+    <km-select-playground />
   </div>
 </main>

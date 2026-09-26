@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
-import {Switch} from './ui/switch/switch';
-import {Select} from './ui/select/select';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { SelectPlayground } from './features/playground/select/select-playground';
+import { SwitchPlayground } from './features/playground/switch/switch-playground';
 
 interface Page {
   id: 'switch' | 'select';
@@ -10,7 +9,7 @@ interface Page {
 
 @Component({
   selector: 'km-root',
-  imports: [Switch, Select, FormsModule, ReactiveFormsModule],
+  imports: [SwitchPlayground, SelectPlayground],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -20,8 +19,4 @@ export class App {
     { id: 'select', label: 'Select' },
   ];
   protected readonly activePage = signal(this.pages[0]);
-
-  protected readonly value = signal(false)
-  protected readonly control = new FormControl(false);
-
 }
